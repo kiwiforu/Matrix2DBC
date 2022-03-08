@@ -5,6 +5,7 @@ import os
 import xlrd
 #====================import======================
 
+
 #====================defined=====================
 DBC_FILE_COLUMN = ['message','id','dlc','cycletime','msgsendtype','format','singal','startbit','length[Bit]','ByteOrder','ValueType','InitialValue','Factor','Offset','Min','Max','Unit']
 
@@ -72,6 +73,20 @@ DEFAULT_BA_DEF =\
 #====================function====================
 
 # ===================================================================
+#     Method      : create_dbc_file
+#
+#     Description :
+#           This method is create dbc file
+#     Parameters  : fpath,
+#                   name
+#     Returns     : None
+# ===================================================================
+def create_dbc_file(fpath, name):
+    fp = open(fpath + "\\" + name + ".dbc", 'w')
+    fp.write(build_dbc_default_start())
+    fp.close()
+
+# ===================================================================
 #     Method      : get_column_index
 #
 #     Description :
@@ -117,6 +132,20 @@ def read_matrix_file(fpath):
 #     Parameters  : data
 #     Returns     : message line
 # ===================================================================
+def build_dbc_default_start():
+    text = 'VERSION \"\"\n\n\n' + 'NS_ :\n'
+    for symbol in NEW_SYMBOLS:
+        text += "	" + symbol + "\n"
+    return text
+
+# ===================================================================
+#     Method      : build_message_info
+#
+#     Description :
+#           This method is build message information
+#     Parameters  : data
+#     Returns     : message line
+# ===================================================================
 def build_message_info(data):
     for info in data:
         if info[0] != "":
@@ -128,6 +157,7 @@ def build_message_info(data):
 #====================main========================
 if __name__ == '__main__':
     print("main function")
-    data = read_matrix_file(r'C:\Users\Administrator\Desktop\data\dbc.xlsx')
-    build_message_info(data)
+    # data = read_matrix_file(r'C:\Users\Administrator\Desktop\data\dbc.xlsx')
+    # build_message_info(data)
+    create_dbc_file(r'C:\Users\kiwi\Desktop\data', 'T5')
 #====================main========================
