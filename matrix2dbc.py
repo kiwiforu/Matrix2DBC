@@ -57,7 +57,7 @@ DEFAULT_BA_DEF =\
     [ "",     "NmAsrBaseAddress",           "Hex",          0x0, 0x7FF, 0x500,                  []],
     [ "BU_",  "ILUsed" ,                    "Enumeration",  "", "",     "no",                   ["no","yes"]],
     [ "",     "ILTxTimeout" ,               "Integer",      0,  65535,  0,                      []],
-    [ "SG_",  "GenSigTimeoutValue" ,        "Integer",      0, 65535,   0,                      []],
+    [ "SG_",  "GenSigTimeoutValue" ,        "Integer",      0,  65535,   0,                      []],
     [ "SG_",  "GenSigTimeoutTime" ,         "Integer",      0,  65535,  0,                      []],
     [ "BO_",  "GenMsgILSupport" ,           "Enumeration",  "", "",     "yes",                  ["no","yes"]],
     [ "BO_",  "GenMsgFastOnStart" ,         "Integer",      0,  65535,  0,                      []],
@@ -87,6 +87,18 @@ MESSAGE_PARAMENT =\
     ['BA_', 'GenMsgCycleTime',  'BO_'],
     ['BA_', 'VFrameFormat',     'BO_'],
 ]
+
+BTYE_ORDER_DEF = \
+{
+    'Motorola'  : '0',
+    'Intel'     : '1'
+}
+
+VALUE_TYPE_DEF = \
+{
+    'Unsigned'  :'+',
+    'Signed'    :'-'
+}
 
 SEND_TYPE_LIST = ["Cyclic","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed","IfActive","NoMsgSendType","NotUsed"]
 FORMAT_LIST = ["StandardCAN","ExtendedCAN","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","reserved","StandardCAN_FD","ExtendedCAN_FD"]
@@ -239,7 +251,7 @@ def build_SG_info(line):
 
     if line[-1] == '':
         line[-1] = 'Vector__XXX'
-    text = ' SG_ ' + line[6] + " : " + str(int(line[7])) + '|' + str(int(line[8])) + '@0+ ('+str(int(line[12])) + ',' + str(int(line[13])) + ') [' + str(line[14]) + '|' + str(line[15]) + '] \"' + str(line[-3]) + '\"  ' + line[-1]
+    text = ' SG_ ' + line[6] + " : " + str(int(line[7])) + '|' + str(int(line[8])) + '@'+BTYE_ORDER_DEF[line[9]]+VALUE_TYPE_DEF[line[10]]+'('+str(int(line[12])) + ',' + str(int(line[13])) + ') [' + str(line[14]) + '|' + str(line[15]) + '] \"' + str(line[-3]) + '\"  ' + line[-1]
     return text
 
 # ===================================================================
