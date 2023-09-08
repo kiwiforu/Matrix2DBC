@@ -403,20 +403,26 @@ def build_signal_parament(data, array, file):
 
 #====================main========================
 if __name__ == '__main__':
-    path = input("input xlsx file path:")
-    name = input("please enter the name:")
-    data, index_list = read_matrix_file(path + '\dbc.xlsx')
+    while True:
+        try:
+            path = input("input xlsx file path:")
+            name = input("please enter the name:")
+            print(path + '\dbc.xlsx')
+            data, index_list = read_matrix_file(path + '\dbc.xlsx')
+        except OSError:
+            print("read xlsx failed")
 
-    fp = open(path + '\\' + name + '.dbc', 'w')
-    fp.write(build_dbc_default_start())
-    fp.write("\nBS_:\n\n")
-    fp.write(build_Ecu_list(data) + '\n')
-    build_message_info(data, index_list, fp)
-    fp.write('\n')
-    build_default_define(DEFAULT_BA_DEF, fp)
-    build_default_parament(DEFAULT_PARAMENT, name, fp)
-    build_signal_parament(data, MESSAGE_PARAMENT, fp)
-    fp.close()
+        else:
+            fp = open(path + '\\' + name + '.dbc', 'w')
+            fp.write(build_dbc_default_start())
+            fp.write("\nBS_:\n\n")
+            fp.write(build_Ecu_list(data) + '\n')
+            build_message_info(data, index_list, fp)
+            fp.write('\n')
+            build_default_define(DEFAULT_BA_DEF, fp)
+            build_default_parament(DEFAULT_PARAMENT, name, fp)
+            build_signal_parament(data, MESSAGE_PARAMENT, fp)
+            fp.close()
 
 
 
